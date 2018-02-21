@@ -25,7 +25,7 @@ CommandLine::CommandLine(istream &in) {
 tuple <unsigned, char **> CommandLine::parseCommands(istream &in) {
 
     //max command length of 1024
-    //chose arbitrary number to make algorithm O(n) rather than O(n^2)
+    //TODO: Reason about best way to handle this in O(?) time
     char ** argv = new char *[1024];
     unsigned argc = 0;
 
@@ -39,7 +39,7 @@ tuple <unsigned, char **> CommandLine::parseCommands(istream &in) {
         //http://en.cppreference.com/w/c/experimental/dynamic/strdup
         argv[argc] = strdup(temp.c_str());
         argc++;
-
+        //TODO if setting argv to an arbitrary size, make sure I don't overflow
     }
 
     //if we read in anything, make argc = argc + 1 (because that's its size)
