@@ -8,9 +8,11 @@ using namespace std;
 
 class Path {
     private:
-        vector<string> mPath;
+        vector<string> vPath;
+        void printVPath(vector<string> v);
+        void populateVPath(string s);
     public:
         Path();
-        //int find(const string& program) const;
-        //string getDirectory(int i) const;
+        int find(const string& program) const;
+        string getDirectory(int i) const;
 };
