@@ -31,9 +31,6 @@ Path::Path() {
     if (pPath != NULL) {
         string sPath(pPath);
         populateVPath(sPath);
-
-        // FOR TESTING
-        //  printVPath(vPath);
     } else {
         // Do something if the PATH IS Null?
     }
@@ -42,37 +39,14 @@ Path::Path() {
 
 // find() searches through all of the directories in
 // vPath until it finds the program, and returns the
-// index of the directory that it was found in.
+// index of the directory that it was found in. Uses
+// searchDir, defined at the bottom of this file.
 int Path::find(const string& program) const {
     int index = -1;
     for (int i = 0; i < vPath.size(); i++) {
-        // The following is based off of the code found at:
-        // http://www.qnx.com/developers/docs/6.5.0/index.jsp?topic=%2Fcom.qnx.doc.neutrino_lib_ref%2Fo%2Fopendir.html
-        DIR* dirp;
-        struct dirent* direntp;
-
-        dirp = opendir(vPath[i].c_str());
-        if (dirp != NULL) {
-            for(;;) {
-                direntp = readdir(dirp);
-                if(direntp == NULL) break;
-                if(direntp->d_name == program) {
-                    index = i;
-                    break;
-                }
-                // FOR TESTING
-                // cout << direntp->d_name << endl;
-            }
-            closedir(dirp);
-        } else {
-            // FOR TESTING
-            // I mean... don't really need to print this.
-            // perror(vPath[i].c_str());
-        }
+        index = searchDir(i, program);
+        if (index != -1) break;
     }
-    // FOR TESTING
-    // cout << index << endl;
-    // cout << vPath[index] << endl;
     return index;
 }
 
@@ -121,5 +95,32 @@ void Path::populateVPath(string s) {
     vPath.push_back(token);
 }
 
+// Helper method for find(), to keep the member method nice and clean!
+int Path::searchDir(int i, const string& progName) const {
+    // The following is based off of the code found at: http://www.qnx.com/developers/docs/6.5.0/index.jsp?topic=%2Fcom.qnx.doc.neutrino_lib_ref%2Fo%2Fopendir.html
+    DIR* dirp;
+    struct dirent* direntp;
 
+    dirp = opendir(vPath[i].c_str());
+    if (dirp != NULL) {
+        for(;;) {
+            direntp = readdir(dirp);
+            if(direntp != NULL) {
+                if(direntp->d_name == progName) {
+                    return i;
+                }
+            } else {
+                break;
+            }
+        }
+        closedir(dirp);
+    } else {
+        // Possible error handling here
+    }
+    return -1;
+}
 
+// for testing the above method:
+// cout << direntp->d_name << endl;
+// perror(vPath[i].c_str());
+// cout << vPath[index] << endl;

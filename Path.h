@@ -21,6 +21,7 @@ class Path {
         vector<string> vPath;
         void printVPath(vector<string> v);
         void populateVPath(string s);
+        int searchDir(int i, const string& progName) const;
     public:
         Path();
         int find(const string& program) const;
