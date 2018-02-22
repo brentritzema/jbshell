@@ -1,3 +1,12 @@
+/******************************************
+ * Path.h contains the class and method
+ * declarations of the Path class.
+ *
+ * Author: Jesse Kuntz
+ * Date: ??
+ * Class: CS 232
+ * ****************************************/
+
 #include <iostream>
 #include <vector>
 #include <stdio.h>

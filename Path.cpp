@@ -1,3 +1,12 @@
+/******************************************
+ * Path.cpp contains the class and method
+ * defintions of the Path class.
+ *
+ * Author: Jesse Kuntz
+ * Date: ??
+ * Class: CS 232
+ * ****************************************/
+
 #include "Path.h"
 
 /******************************************
@@ -16,18 +25,24 @@
  * assignment.
  * ****************************************/
 
+// Constructor
 Path::Path() {
     char* pPath = getenv("PATH");
-    if (pPath!=NULL) {
+    if (pPath != NULL) {
         string sPath(pPath);
         populateVPath(sPath);
 
         // FOR TESTING
         //  printVPath(vPath);
+    } else {
+        // Do something if the PATH IS Null?
     }
-    // Do something if the PATH IS Null?
+
 }
 
+// find() searches through all of the directories in
+// vPath until it finds the program, and returns the
+// index of the directory that it was found in.
 int Path::find(const string& program) const {
     int index = -1;
     for (int i = 0; i < vPath.size(); i++) {
@@ -61,6 +76,9 @@ int Path::find(const string& program) const {
     return index;
 }
 
+// getDirectory() returns the name of the
+// directory in vPath specified by the given
+// index.
 string Path::getDirectory(int i) const {
     if (i > vPath.size() || i < 0) {
         cout << "Index out of bounds." << endl;
@@ -89,12 +107,16 @@ void Path::populateVPath(string s) {
     string token;
     int i = 0;
 
+    // Splits up all of the elements of PATH and
+    // puts them into vPath.
     while (s.find(":", i) != string::npos) {
         token = s.substr(i, s.find(":", i) - i);
         vPath.push_back(token);
         i = s.find(":", i) + 1;
     }
 
+    // Puts the last directory into vPath, separated
+    // because there is no ':' at the end of PATH.
     token = s.substr(i, s.find(":", i) - i);
     vPath.push_back(token);
 }
