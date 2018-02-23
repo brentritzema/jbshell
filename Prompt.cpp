@@ -20,13 +20,21 @@ Prompt::Prompt() {
 
     // Check, so there is no buffer overflow.
     if (getcwd(cwd, sizeof(cwd)) != NULL) {
-        mPrompt = cwd;
+        // Hostname
+        char hostname[HOST_NAME_MAX];
+        gethostname(hostname, HOST_NAME_MAX);
+
+        // Username
+        char username[LOGIN_NAME_MAX];
+        getlogin_r(username, LOGIN_NAME_MAX);
+
+        mPrompt = string(username) + "@" + string(hostname) + ":" + cwd + "$ ";
     } else {
-        // Print an error?
+        cout << "cwd too big!" << endl;
     }
 }
 
 // Accessor.
 string Prompt::get() const {
-    return mPrompt + "/$ ";
+    return mPrompt;
 }

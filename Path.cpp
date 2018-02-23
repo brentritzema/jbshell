@@ -32,7 +32,7 @@ Path::Path() {
         string sPath(pPath);
         populateVPath(sPath);
     } else {
-        // Do something if the PATH IS Null?
+        cout << "Nothing in PATH." << endl;
     }
 
 }
@@ -56,7 +56,6 @@ int Path::find(const string& program) const {
 string Path::getDirectory(int i) const {
     if (i > vPath.size() || i < 0) {
         cout << "Index out of bounds." << endl;
-        // What do I return here?
         return "-1";
     } else {
         return vPath[i];
@@ -115,7 +114,7 @@ int Path::searchDir(int i, const string& progName) const {
         }
         closedir(dirp);
     } else {
-        // Possible error handling here
+        cout << "Directory is NULL" << endl;
     }
     return -1;
 }
