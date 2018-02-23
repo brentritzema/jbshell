@@ -37,6 +37,9 @@ tuple <unsigned, char **> CommandLine::parseCommands(istream &in) {
         }
     }
 
+    // Ignore to the end of line
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
     //if we read in anything, make argc = argc + 1 (because that's its size)
     //else do nothing
     if ( argc > 0 )

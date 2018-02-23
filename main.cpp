@@ -7,5 +7,7 @@
 #include "JBShell.h"
 
 int main() {
+    JBShell jb;
+    jb.run();
     return 0;
 }
