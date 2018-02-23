@@ -13,19 +13,11 @@ CommandLine::CommandLine(istream &in) {
     tuple <unsigned, char **> args = parseCommands(in);
     mArgc = get<0>(args);
     mArgv = get<1>(args);
-
-    if(mArgc == 0) {
-
-        cout << "Error command line empty" << endl;
-        exit(-1);
-
-    }
 }
 
 tuple <unsigned, char **> CommandLine::parseCommands(istream &in) {
 
     //max command length of 1024
-    //TODO: Reason about best way to handle this in O(?) time
     char ** argv = new char *[1024];
     unsigned argc = 0;
 
@@ -39,7 +31,10 @@ tuple <unsigned, char **> CommandLine::parseCommands(istream &in) {
         //http://en.cppreference.com/w/c/experimental/dynamic/strdup
         argv[argc] = strdup(temp.c_str());
         argc++;
-        //TODO if setting argv to an arbitrary size, make sure I don't overflow
+        if (argc >= 1023) {
+            cout << "Error: Too many arguments in command" << endl;
+            break;
+        }
     }
 
     //if we read in anything, make argc = argc + 1 (because that's its size)
@@ -51,7 +46,10 @@ tuple <unsigned, char **> CommandLine::parseCommands(istream &in) {
 }
 
 char * CommandLine::getCommand() const {
-    return this->getArgVector(0);
+    if(mArgc != 0)
+        return this->getArgVector(0);
+    else
+        return NULL;
 }
 
 int CommandLine::getArgCount() const {
@@ -59,21 +57,27 @@ int CommandLine::getArgCount() const {
 }
 
 char ** CommandLine::getArgVector() const {   
-    return mArgv;
+    if(mArgc != 0)
+        return mArgv;
+    else
+        return NULL;
 }
 
 char * CommandLine::getArgVector(unsigned i) const {
     if(i < mArgc) {
         return mArgv[i];
     } else {
-        cout << "Error argument index out of range " << endl;
+        cout << "Error: argument index out of range " << endl;
         return NULL;
     }
 }
 
 bool CommandLine::noAmpersand() const {
     //return true if the last element is &, false otherwise
-    return mArgv[mArgc-1] != "&" ? true : false;
+    if(mArgc != 0)
+        return mArgv[mArgc-1] != "&" ? true : false;
+    else
+        return false;
 }
 
 CommandLine::~CommandLine() {
