@@ -15,7 +15,6 @@ void JBShell::run() {
     while(true) {
         cout << mPrompt.get() << flush;
         CommandLine commandLine(cin);
-        
 
         // taken partially from POGIL exercise
         if(commandLine.getArgCount() != 0) {
@@ -39,13 +38,12 @@ void JBShell::run() {
             }
         }
     }
-    cout << "made it past here" << endl;
 
 }
 
 void JBShell::execCommand(CommandLine commandLine) {
     //fork worked 
-    string command = commandLine.getCommand();
+    string command(commandLine.getCommand());
     string path = mPath.getDirectory(mPath.find(command)) + '/' + command;
     execve(path.c_str(), commandLine.getArgVector(), NULL);
 
@@ -55,6 +53,8 @@ void JBShell::execCommand(CommandLine commandLine) {
 
 void JBShell::waitForChild(CommandLine commandLine, int pid) {
     int status;
+
+    //heavily relied on https://www.ibm.com/support/knowledgecenter/en/SSLTBW_2.1.0/com.ibm.zos.v2r1.bpxbd00/rtwaip.htm
     while(pid == 0) {
         if((pid = waitpid(pid, &status, WNOHANG)) == -1) {
             cerr << "wait() error" << endl;

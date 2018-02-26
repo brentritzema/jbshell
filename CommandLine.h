@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <tuple>
 #include <limits>
+#include <vector>
 
 using namespace std;
 

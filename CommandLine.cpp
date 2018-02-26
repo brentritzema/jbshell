@@ -17,9 +17,7 @@ CommandLine::CommandLine(istream &in) {
 
 tuple <unsigned, char **> CommandLine::parseCommands(istream &in) {
 
-    //max command length of 1024
-    char ** argv = new char *[1024];
-    unsigned argc = 0;
+    vector <char *> commands;
 
     //parse argv
     string temp;
@@ -27,25 +25,32 @@ tuple <unsigned, char **> CommandLine::parseCommands(istream &in) {
     while(in.peek() != '\n') {
         
         in >> temp;
+
         //convert from const char * to char *
+        //adds null termination
+        //dynamically allocates memory
         //http://en.cppreference.com/w/c/experimental/dynamic/strdup
-        argv[argc] = strdup(temp.c_str());
-        argc++;
-        if (argc >= 1023) {
-            cout << "Error: Too many arguments in command" << endl;
-            break;
+        commands.push_back(strdup(temp.c_str()));
+
+    }
+
+    // Ignore the end of line
+    in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    //length  + 1 because we need a null termination at the very end
+    char ** argv = new char *[commands.size() + 1];
+
+    //f we read anything, copy the commands from the vector to a char ** array
+    if ( commands.size() > 0 ) {
+        for (int i = 0; i < commands.size(); i++) {
+            argv[i] = commands[i];
         }
     }
 
-    // Ignore to the end of line
-    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    //null terminate argv array
+    argv[commands.size()] = NULL;
 
-    //if we read in anything, make argc = argc + 1 (because that's its size)
-    //else do nothing
-    if ( argc > 0 )
-        argc++;
-
-    return make_tuple(argc, argv);
+    return make_tuple(commands.size(), argv);
 }
 
 char * CommandLine::getCommand() const {
@@ -86,7 +91,8 @@ bool CommandLine::noAmpersand() const {
 CommandLine::~CommandLine() {
     //cleanup each individual string
     for(int i = 0; i < mArgc; i++) {
-        free(mArgv[i]);
+        if(mArgv[i] != NULL)
+            free(mArgv[i]);
     }
 
     //cleanup dynamic array if it exists
