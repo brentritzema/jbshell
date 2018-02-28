@@ -26,7 +26,7 @@ public:
     void run();
 private:
     void execCommand(CommandLine);
-    void waitForChild(CommandLine, int);
+    void waitForChild(int);
     Path mPath;
     Prompt mPrompt;
 };

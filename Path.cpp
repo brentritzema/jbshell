@@ -54,8 +54,8 @@ int Path::find(const string& program) const {
 // directory in vPath specified by the given
 // index.
 string Path::getDirectory(int i) const {
-    if (i > vPath.size() || i < 0) {
-        cout << "Index out of bounds." << endl;
+    if (i == -1) {
+        //cout << "Index out of bounds." << endl;
         return "-1";
     } else {
         return vPath[i];
@@ -113,9 +113,7 @@ int Path::searchDir(int i, const string& progName) const {
             }
         }
         closedir(dirp);
-    } else {
-        cout << "Directory is NULL" << endl;
-    }
+    } 
     return -1;
 }
 

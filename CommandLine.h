@@ -85,8 +85,12 @@ private:
      */ 
     tuple <unsigned, char **> parseCommands(istream &in);
 
+    //concrete implementation of noAmpersand()
+    bool ampersandCheck(vector <char *> & commands);
+
     char ** mArgv;
     unsigned mArgc;
+    bool mNoAmpersand;
 };
 
 #endif
