@@ -28,8 +28,13 @@ void JBShell::run() {
                 cerr << "Fork Failed" << endl;
 
             } else if (pid == 0) {
-                //child
-                execCommand(commandLine);
+                if (mPath.getDirectory(mPath.find(commandLine.getCommand())) == "-1") {
+                    cerr << "Program not found." << endl;
+                    return;
+                } else {
+                    //child
+                    execCommand(commandLine);
+                }
 
             } else {
                 //parent
@@ -37,7 +42,7 @@ void JBShell::run() {
                     waitForChild(pid);
                 }
                 //if there is an amperstand, don't wait
-                
+
             }
         }
     }
@@ -45,7 +50,7 @@ void JBShell::run() {
 }
 
 void JBShell::execCommand(CommandLine commandLine) {
-    //fork worked 
+    //fork worked
     string command(commandLine.getCommand());
     string path = mPath.getDirectory(mPath.find(command)) + '/' + command;
     execve(path.c_str(), commandLine.getArgVector(), NULL);
@@ -65,7 +70,7 @@ void JBShell::waitForChild(int pid) {
             //do nothing
         } else {
             if(WIFSTOPPED(status))
-               cerr << "child exited unsuccessfully" << endl; 
+               cerr << "child exited unsuccessfully" << endl;
         }
     } while (pid == 0);
 }

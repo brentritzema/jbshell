@@ -55,7 +55,6 @@ int Path::find(const string& program) const {
 // index.
 string Path::getDirectory(int i) const {
     if (i == -1) {
-        //cout << "Index out of bounds." << endl;
         return "-1";
     } else {
         return vPath[i];
@@ -113,7 +112,7 @@ int Path::searchDir(int i, const string& progName) const {
             }
         }
         closedir(dirp);
-    } 
+    }
     return -1;
 }
 
