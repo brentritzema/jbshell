@@ -19,7 +19,13 @@ using namespace std;
 class Prompt {
     private:
         string mPrompt;
+        string mCWD;
     public:
         Prompt();
+
+        //returns full prompt string
         string get() const;
+        
+        //returns current working directory
+        string getCWD() const;
 };

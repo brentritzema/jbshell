@@ -15,41 +15,82 @@ void JBShell::run() {
     while(true) {
         cout << mPrompt.get() << flush;
         CommandLine commandLine(cin);
-        pid_t pid;
 
         // taken partially from POGIL exercise
         if(commandLine.getArgCount() != 0) {
 
-            /*fork child*/
-            pid = fork();
+            string command = commandLine.getCommand();
 
-            if (pid < 0) {
-                //error occurred
-                cerr << "Fork Failed" << endl;
-
-            } else if (pid == 0) {
-                if (mPath.getDirectory(mPath.find(commandLine.getCommand())) == "-1") {
-                    cerr << "Program not found." << endl;
-                    return;
-                } else {
-                    //child
-                    execCommand(commandLine);
-                }
-
+            if(command == "cd") {
+                changeWorkingDirectory(commandLine);
+            } else if (command == "pwd") {
+                printWorkingDirectory(commandLine);
+            } else if (command == "exit") {
+                break;
             } else {
-                //parent
-                if (commandLine.noAmpersand()) {
-                    waitForChild(pid);
-                }
-                //if there is an amperstand, don't wait
-
+                forkChild(commandLine);
             }
         }
     }
-
 }
 
-void JBShell::execCommand(CommandLine commandLine) {
+void JBShell::printWorkingDirectory(const CommandLine &commandLine) {
+    string cwd = mPrompt.getCWD();
+    if(commandLine.getArgCount() != 1) {
+        cerr << "incorrect number of arguments passed to pwd" << endl;
+    } else {
+        if (cwd == "") {
+            cerr << "failed to fetch current working directory" << endl;
+        } else {
+            cout << cwd << endl;
+        }
+    }
+}
+
+void JBShell::changeWorkingDirectory(const CommandLine &commandLine) {
+    if(commandLine.getArgCount() != 2) {
+        cerr << "incorrect number of arguments to cd" << endl;
+    } else {
+        string newPath = commandLine.getArgVector(1);
+        if(chdir(newPath.c_str()) == -1) {
+            perror("cd failed");
+        } else {
+            //success
+            //update prompt by reinitializing
+            mPrompt = Prompt();
+        }
+    }
+}
+
+void JBShell::forkChild(const CommandLine &commandLine) {
+    pid_t pid;
+
+    /*fork child*/
+    pid = fork();
+
+    if (pid < 0) {
+        //error occurred
+        cerr << "Fork Failed" << endl;
+
+    } else if (pid == 0) {
+        if (mPath.getDirectory(mPath.find(commandLine.getCommand())) == "-1") {
+            cerr << "Program not found." << endl;
+            return;
+        } else {
+            //child
+            execCommand(commandLine);
+        }
+
+    } else {
+        //parent
+        if (commandLine.noAmpersand()) {
+            waitForChild(pid);
+        }
+        //if there is an amperstand, don't wait
+    }
+}
+
+void JBShell::execCommand(const CommandLine &commandLine) {
     //fork worked
     string command(commandLine.getCommand());
     string path = mPath.getDirectory(mPath.find(command)) + '/' + command;

@@ -29,12 +29,18 @@ Prompt::Prompt() {
         getlogin_r(username, LOGIN_NAME_MAX);
 
         mPrompt = string(username) + "@" + string(hostname) + ":" + cwd + "$ ";
+        mCWD = cwd;
     } else {
         cout << "cwd too big!" << endl;
+        mCWD = "";
     }
 }
 
 // Accessor.
 string Prompt::get() const {
     return mPrompt;
+}
+
+string Prompt::getCWD() const {
+    return mCWD;
 }
