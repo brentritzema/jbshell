@@ -3,7 +3,6 @@
  * declarations of the Prompt class.
  *
  * Author: Jesse Kuntz
- * Date: ??
  * Class: CS 232
  * ****************************************/
 
@@ -23,9 +22,9 @@ class Prompt {
     public:
         Prompt();
 
-        //returns full prompt string
+        // Returns full prompt string
         string get() const;
-        
-        //returns current working directory
+
+        // Returns current working directory
         string getCWD() const;
 };

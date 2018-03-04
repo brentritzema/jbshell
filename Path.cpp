@@ -3,22 +3,10 @@
  * defintions of the Path class.
  *
  * Author: Jesse Kuntz
- * Date: ??
  * Class: CS 232
  * ****************************************/
 
 #include "Path.h"
-
-/******************************************
- * To figure out as a pair:
- * - Do I need to send any error handling?
- * Or should I be printing it?
- * - opendir() error handling
- * - getDirectory() error handling
- * - Path() error handling
- * - Right now it avoids all errors, just doesn't
- * handle them.
- * ****************************************/
 
 /******************************************
  * Necessary methods, as defined by the
@@ -115,8 +103,3 @@ int Path::searchDir(int i, const string& progName) const {
     }
     return -1;
 }
-
-// for testing the above method:
-// cout << direntp->d_name << endl;
-// perror(vPath[i].c_str());
-// cout << vPath[index] << endl;

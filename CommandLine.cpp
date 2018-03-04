@@ -1,7 +1,7 @@
 /*
  * CommandLine definitions for jbshell (which is just a shell)
  * Handles a single command line
- * Created by: Brent Ritzema and Jesse Kuntz for CS232
+ * Created by: Brent Ritzema for CS232
  * Calvin College Spring 2018
  */
 
@@ -11,7 +11,7 @@
 CommandLine::CommandLine(istream &in) {
 
     mNoAmpersand = true;
-    
+
     tuple <unsigned, char **> args = parseCommands(in);
     mArgc = get<0>(args);
     mArgv = get<1>(args);
@@ -26,7 +26,7 @@ tuple <unsigned, char **> CommandLine::parseCommands(istream &in) {
     string temp;
 
     while(in.peek() != '\n') {
-        
+
         in >> temp;
 
         //convert from const char * to char *
@@ -70,7 +70,7 @@ bool CommandLine::ampersandCheck(vector <char *> & commands) {
         } else {
             //must be an ampersand, remove it and return false
             commands.pop_back();
-            return false; 
+            return false;
         }
     } else {
         return false;
@@ -89,7 +89,7 @@ int CommandLine::getArgCount() const {
     return mArgc;
 }
 
-char ** CommandLine::getArgVector() const {   
+char ** CommandLine::getArgVector() const {
     if(mArgc != 0)
         return mArgv;
     else

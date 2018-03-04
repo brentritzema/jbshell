@@ -1,7 +1,7 @@
 /*
  * CommandLine declarations for jbshell (which is just a shell)
  * Handles a single command line
- * Created by: Brent Ritzema and Jesse Kuntz for CS232
+ * Created by: Brent Ritzema and for CS232
  * Calvin College Spring 2018
  */
 
@@ -33,7 +33,7 @@ public:
      *
      * @param: none
      * @return: char pointer to command
-     */ 
+     */
     char * getCommand() const;
 
     /*
@@ -41,7 +41,7 @@ public:
      *
      * @param: none
      * @return: number of arguments (argc)
-     */ 
+     */
     int getArgCount() const;
 
     /*
@@ -49,15 +49,15 @@ public:
      *
      * @param: none
      * @return: char pointer to array of commands (argv)
-     */ 
+     */
     char ** getArgVector() const;
 
     /*
      * Returns a char* command (aka argv[i])
      *
-     * @param: int i, the position of the command in the argv array 
+     * @param: int i, the position of the command in the argv array
      * @return: char pointer to ith command (argv[i])
-     */ 
+     */
     char * getArgVector(unsigned i) const;
 
     /*
@@ -65,7 +65,7 @@ public:
      *
      * @param: none
      * @return: true if and only if no amperstand was given to the command line
-     */ 
+     */
     bool noAmpersand() const;
 
     /*
@@ -73,7 +73,7 @@ public:
      *
      * @param: none
      * @return: none
-     */ 
+     */
     virtual ~CommandLine();
 
 private:
@@ -81,8 +81,8 @@ private:
      * Parses commands from stream and load into (argc, argv)
      *
      * @param: istream &in, input stream
-     * @return: a tuple with argc and argv 
-     */ 
+     * @return: a tuple with argc and argv
+     */
     tuple <unsigned, char **> parseCommands(istream &in);
 
     //concrete implementation of noAmpersand()

@@ -3,7 +3,6 @@
  * defintions of the Prompt class.
  *
  * Author: Jesse Kuntz
- * Date: ??
  * Class: CS 232
  * ****************************************/
 
@@ -36,7 +35,8 @@ Prompt::Prompt() {
     }
 }
 
-// Accessor.
+// Accessors
+
 string Prompt::get() const {
     return mPrompt;
 }

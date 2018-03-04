@@ -6,6 +6,11 @@
 
 #include "JBShell.h"
 
+/******************************************
+ * Necessary methods, as defined by the
+ * assignment.
+ * ****************************************/
+
 JBShell::JBShell() {
 
 }
@@ -28,11 +33,17 @@ void JBShell::run() {
             } else if (command == "exit") {
                 break;
             } else {
+                // not a "built-in" command, so search the PATH
                 forkChild(commandLine);
             }
         }
     }
 }
+
+/******************************************
+ * Methods to help keep things clean
+ * and readable.
+ * ****************************************/
 
 void JBShell::printWorkingDirectory(const CommandLine &commandLine) {
     string cwd = mPrompt.getCWD();
@@ -55,21 +66,22 @@ void JBShell::changeWorkingDirectory(const CommandLine &commandLine) {
         if(chdir(newPath.c_str()) == -1) {
             perror("cd failed");
         } else {
-            //success
-            //update prompt by reinitializing
+            // success
+            // update prompt by reinitializing
             mPrompt = Prompt();
         }
     }
 }
 
+// Method for forking a child, including support for the '&' option
 void JBShell::forkChild(const CommandLine &commandLine) {
     pid_t pid;
 
-    /*fork child*/
+    /* fork child */
     pid = fork();
 
     if (pid < 0) {
-        //error occurred
+        // error occurred
         cerr << "Fork Failed" << endl;
 
     } else if (pid == 0) {
@@ -77,21 +89,21 @@ void JBShell::forkChild(const CommandLine &commandLine) {
             cerr << "Program not found." << endl;
             return;
         } else {
-            //child
+            // child
             execCommand(commandLine);
         }
 
     } else {
-        //parent
+        // parent
         if (commandLine.noAmpersand()) {
             waitForChild(pid);
         }
-        //if there is an amperstand, don't wait
+        // IF there is an ampersand, don't wait
     }
 }
 
 void JBShell::execCommand(const CommandLine &commandLine) {
-    //fork worked
+    // fork worked
     string command(commandLine.getCommand());
     string path = mPath.getDirectory(mPath.find(command)) + '/' + command;
     execve(path.c_str(), commandLine.getArgVector(), NULL);
@@ -103,12 +115,12 @@ void JBShell::execCommand(const CommandLine &commandLine) {
 void JBShell::waitForChild(int pid) {
     int status;
 
-    //heavily relied on https://www.ibm.com/support/knowledgecenter/en/SSLTBW_2.1.0/com.ibm.zos.v2r1.bpxbd00/rtwaip.htm
+    // heavily relied on https://www.ibm.com/support/knowledgecenter/en/SSLTBW_2.1.0/com.ibm.zos.v2r1.bpxbd00/rtwaip.htm
     do {
         if((pid = waitpid(pid, &status, WUNTRACED)) == -1) {
             cerr << "wait() error" << endl;
         } else if (pid == 0) {
-            //do nothing
+            // do nothing
         } else {
             if(WIFSTOPPED(status))
                cerr << "child exited unsuccessfully" << endl;

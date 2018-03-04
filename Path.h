@@ -3,7 +3,6 @@
  * declarations of the Path class.
  *
  * Author: Jesse Kuntz
- * Date: ??
  * Class: CS 232
  * ****************************************/
 
