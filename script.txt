@@ -1,0 +1,56 @@
+jrk54@codd:~/cs232/jbshell$ g++ CommandLine.cpp JBShell.cpp main.cpp Path.cpp Prompt.cpp -std=c++11
+jrk54@codd:~/cs232/jbshell$ ./a.out 
+jrk54@codd:/home/jrk54/cs232/jbshell$ ls
+CommandLine.cpp  CommandLine.h	JBShell.cpp  JBShell.h	LICENSE  Path.cpp  Path.h  Prompt.cpp  Prompt.h  a.out	grading.txt  main.cpp
+jrk54@codd:/home/jrk54/cs232/jbshell$ cd ..
+jrk54@codd:/home/jrk54/cs232$ pwd
+/home/jrk54/cs232
+jrk54@codd:/home/jrk54/cs232$ cd jbshell
+jrk54@codd:/home/jrk54/cs232/jbshell$ ls -a
+.  ..  .git  .vscode  CommandLine.cpp  CommandLine.h  JBShell.cpp  JBShell.h  LICENSE  Path.cpp  Path.h  Prompt.cpp  Prompt.h  a.out  grading.txt  main.cpp  script.txt
+jrk54@codd:/home/jrk54/cs232/jbshell$ ls -l /home/cs/
+total 84
+drwxrwsr-x  3 admin facstf         4096 Jan 26 16:14 101
+drwxrwsr-x 10 admin facstf         4096 Jan 26 16:11 106
+drwxrwsr-x  8 admin facstf         4096 Jan 26 16:14 108
+drwxrwsr-x  9 admin facstf         4096 Jan 26 16:14 112
+drwxrwsr-x  4 admin facstf         4096 Jan 26 16:14 202
+drwxrwsr-x  5 admin facstf         4096 Jan 26 16:12 212
+drwxrwsr-x  5 admin facstf         4096 Jan 26 16:14 214
+drwxrwsr-x  7 admin facstf         4096 Feb 14 09:18 232
+drwxrwsr-x  4 admin facstf         4096 Jan 26 16:12 262
+drwxrwsr-x  3 admin facstf         4096 Jan 26 16:14 300
+drwxrwsr-x  6 admin facstf         4096 Jan 26 16:12 332
+drwxrwsr-x  3 admin facstf         4096 Jan 23  2017 336
+drwxrwsr-x  3 admin facstf         4096 Jan 26 16:13 337
+drwxrwsr-x  3 admin facstf         4096 Jan 26 16:14 364
+drwxrwsr-x  5 admin facstf         4096 Jan 26 16:13 374
+drwxrwsr-x  3 admin facstf         4096 Jan 26 16:14 384
+drwxrwsr-x  3 admin facstf         4096 Jan 26 16:14 390
+drwxrwsr-x  3 admin facstf         4096 Jan 26 16:14 394
+drwxrwsr-x  3 admin facstf         4096 Jan 26 16:14 398
+drwxrwsr-x  3 admin seniorprojects 4096 Feb  7 14:02 seniorprojects
+drwxrwsr-x  4 admin facstf         4096 Jan 26 16:13 w61
+jrk54@codd:/home/jrk54/cs232/jbshell$ pwd
+/home/jrk54/cs232/jbshell
+jrk54@codd:/home/jrk54/cs232/jbshell$ ps &
+jrk54@codd:/home/jrk54/cs232/jbshell$   PID TTY          TIME CMD
+ 3896 pts/11   00:00:00 bash
+ 4862 pts/11   00:00:00 a.out
+ 4934 pts/11   00:00:00 ps
+
+jrk54@codd:/home/jrk54/cs232/jbshell$ df
+Filesystem      1K-blocks      Used  Available Use% Mounted on
+udev              8095904         0    8095904   0% /dev
+tmpfs             1624160      9392    1614768   1% /run
+/dev/sda5       161251924  33021736  120016020  22% /
+tmpfs             8120792     33688    8087104   1% /dev/shm
+tmpfs                5120         4       5116   1% /run/lock
+tmpfs             8120792         0    8120792   0% /sys/fs/cgroup
+tmpfs             8120792        20    8120772   1% /tmp
+katz:/home     2064107008 845850624 1197268992  42% /home
+tmpfs             1624160        68    1624092   1% /run/user/50203
+jrk54@codd:/home/jrk54/cs232/jbshell$ notAProgram
+Command or program not found.
+jrk54@codd:/home/jrk54/cs232/jbshell$ exit
+jrk54@codd:~/cs232/jbshell$

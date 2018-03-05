@@ -86,7 +86,7 @@ void JBShell::forkChild(const CommandLine &commandLine) {
 
     } else if (pid == 0) {
         if (mPath.getDirectory(mPath.find(commandLine.getCommand())) == "-1") {
-            cerr << "Program not found." << endl;
+            cerr << "Command or program not found." << endl;
             return;
         } else {
             // child
